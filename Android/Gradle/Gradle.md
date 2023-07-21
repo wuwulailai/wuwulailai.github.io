@@ -1,7 +1,9 @@
 # 各个文件用途
 ## gradle.properties
+敏感信息
 
 ## gradle-wrapper.properties
+gradle版本下载和安装配置
 
 ## settings.gradle
 文件将包含必要的一些设置，如任务或项目之间的依赖关系等
