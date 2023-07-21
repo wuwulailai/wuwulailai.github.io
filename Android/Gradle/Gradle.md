@@ -1,7 +1,26 @@
 # 各个文件用途
 ## gradle.properties
+
 ## gradle-wrapper.properties
+
 ## settings.gradle
+文件将包含必要的一些设置，如任务或项目之间的依赖关系等
+settings.gradle是模块Module配置文件，
+大多数setting.gradle的作用是为了配置子模块
+根目录的setting.gradle脚本文件是针对module的全局配置
+setting.gradle用户创建多Project的Gradle项目。Project在IDEA对应Module模块
+配置module名rootProject.name = 'project-root',为指定父模块的名称，
+include 'hello'为指定包含哪些模块
+
+// 平台根
+rootProject.name = 'project-root'
+// 包含子系统以及模块
+include ':project-core'
+// hello系统模块的加载
+include ':project-hello'
+// world系统模块的加载
+include ':project-world'
+
 ## build.gradle
 ### Project的build.gradle
 buildscript { //这里是gradle脚本执行所需依赖，分别是对应的maven库和插件
@@ -313,3 +332,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+### Gradle工作流程
+1、初始化阶段：
+2、首先解析settings.gradle
+Configure阶段：
+解析每个Project中的build.gradle,解析过程中并不执行各个build.gradle中的task
+
+经过Configure阶段，Project之间及内部Task之间的关系就确定了。
+一个Project包含很多Task，每个Task之间有依赖关系，Configuration会建立一个有向图来描述Task之间的依赖关系，
+所有Project配置完成后，会有一个回调project.afterEvaluate,表示所有模块已经配置完成。
+3、执行Task任务
+
